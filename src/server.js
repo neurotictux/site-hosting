@@ -1,21 +1,17 @@
 import express from 'express'
-import linuxUser from 'linux-user'
 import bodyParser from 'body-parser'
+
+import userController from './controllers/user'
 
 const app = express()
 
 app.use(bodyParser.json())
 app.use(express.static('public'))
 
-app.get('/users', (req, res) => {
-  linuxUser.getUsers((err, users) => {
-    if (err)
-      return res.end(err)
-    res.json(users)
-  })
-})
+app.get('/api/user', userController.getAll)
+app.post('/api/user', userController.create)
 
-const port = 80
+const port = 8081
 
 app.listen(port, () => {
   console.log(`Listening in port ${port}`)
