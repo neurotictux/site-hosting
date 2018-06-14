@@ -1,0 +1,15 @@
+<div layout="column">
+  <mat-form-field class="form-item">
+    <input matInput [(ngModel)]="user.name" placeholder="Nome">
+  </mat-form-field>
+  <br />
+  <mat-form-field class="form-item">
+    <input matInput [(ngModel)]="user.email" placeholder="Email">
+  </mat-form-field>
+  <br />
+  <mat-slide-toggle [(ngModel)]="user.admin">Admin?</mat-slide-toggle>
+  <div style="width: 90%;text-align: right;padding: 0;margin: 0">
+    <button mat-button mat-dialog-close color="primary">Cancel</button>
+    <button mat-raised-button [mat-dialog-close]="user" color="primary">Salvar</button>
+  </div>
+</div>
