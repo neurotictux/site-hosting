@@ -6,3 +6,26 @@
   margin: 0;
   padding: 0;
 }
+
+.alpha-title{
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 30px;
+}
+
+.alpha-link{
+  margin-left: 25px;
+  font-size: 15px;
+  color:white;
+}
+
+body{
+  background-image: url('./assets/background-nas.jpg')
+}
+
+.form-item{
+  width: 90%; 
+  padding: 0; 
+  margin: 0;
+  overflow: hidden;
+  width: 400px;
+}

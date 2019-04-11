@@ -1,41 +1,17 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-  <!-- Position Column -->
-  <ng-container matColumnDef="userId">
-    <th mat-header-cell *matHeaderCellDef> Id </th>
-    <td mat-cell *matCellDef="let element"> {{element.userId}} </td>
-  </ng-container>
-
-  <!-- Name Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Nome </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef> Email </th>
-    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-button color="primary" (click)="openModal(element)">Editar</button>
-      <button mat-button color="warn" (click)="removeUser(element)">Remover</button>
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="admin">
-    <th mat-header-cell *matHeaderCellDef> Admin </th>
-    <td mat-cell *matCellDef="let element"> {{element.admin ? 'Sim' : 'Não'}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
-<div style="text-align:center;margin-top: 20px; overflow: hidden;">
-  <br />
-  <button mat-raised-button color="primary" (click)="openModal({})">Novo</button>
+<mat-toolbar color="primary">
+  <span style="margin-right: 80px">
+    Bohemia Hospedagem
+  </span>
+  <div style="width:80%">
+    <a routerLink="/" class="alpha-link" routerLinkActive="active">Página inicial</a>
+    <a [hidden]="!logged" routerLink="/data-access" class="alpha-link" routerLinkActive="active">Dados de acesso</a>
+  </div>
+  <div style="width:20%; text-align: end">
+    <a [hidden]="logged" routerLink="/account" class="alpha-link" routerLinkActive="active">Criar conta</a>
+    <a [hidden]="logged" routerLink="/login" class="alpha-link" routerLinkActive="inactive">Entrar</a>
+    <a [hidden]="!logged"  routerLink="/" class="alpha-link" (click)="logout()">Sair</a>
+  </div>
+</mat-toolbar>
+<div style="margin: 50px">
+  <router-outlet></router-outlet>
 </div>

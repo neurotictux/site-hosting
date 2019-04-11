@@ -7,11 +7,17 @@
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "body-parser": "^1.18.2",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "linux-user": "^0.1.0",
+    "morgan": "^1.9.0",
+    "mysql2": "^1.5.3",
     "sequelize": "^4.37.7",
+    "sha1": "^1.1.1",
     "sqlite3": "^4.0.0"
   },
   "devDependencies": {

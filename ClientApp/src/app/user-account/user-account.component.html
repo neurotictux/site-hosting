@@ -1,0 +1,28 @@
+<mat-card style="width:400px">
+  <mat-card-header>
+    <mat-card-title class="alpha-title">Cadastro</mat-card-title>
+  </mat-card-header>
+  <div layout="column" style="width:400px">
+    <mat-form-field class="form-item">
+      <input matInput [(ngModel)]="user.name" placeholder="Nome">
+    </mat-form-field>
+    <br />
+    <mat-form-field class="form-item">
+      <input matInput [(ngModel)]="user.domain" placeholder="Domínio: exemplo.com">
+    </mat-form-field>
+    <br />
+    <mat-form-field class="form-item">
+      <input matInput [(ngModel)]="user.email" placeholder="Email">
+    </mat-form-field>
+    <mat-form-field class="form-item">
+      <input matInput type="password" [(ngModel)]="user.password" placeholder="Senha">
+    </mat-form-field>
+    <br />
+    <span style="color:red">
+      {{message}}
+    </span>
+    <div style="text-align: right;padding: 0;margin: 0">
+      <button mat-raised-button (click)="createUser()" color="primary">PRÓXIMO</button>
+    </div>
+  </div>
+</mat-card>

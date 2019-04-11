@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +12,15 @@ export class UserService {
     return this.http.get('/api/user')
   }
 
-  saveUser(user) {
-    if (user.userId > 0)
-      return this.http.put('/api/user', user)
-    else
-      return this.http.post('/api/user', user)
+  createUser(user: User) {
+    return this.http.post('/api/user', user)
   }
 
-  removeUser(id){
+  getToken(user) {
+    return this.http.post('/api/token', user)
+  }
+
+  removeUser(id) {
     return this.http.delete(`/api/user/${id}`)
   }
 }

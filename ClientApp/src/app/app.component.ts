@@ -3,21 +3,40 @@ import { HttpClient } from '@angular/common/http'
 import { MatTableDataSource, MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { NewUserModalComponent } from './new-user-modal/new-user-modal.component';
 import { UserService } from './services/user.service';
+import { Router } from '@angular/router';
+import { Globals } from './models/user';
 
 @Component({
-  selector: 'error-modal',
-  template: '<span style="color:red;font-size:30px">X</span> {{error}}!'
+  selector: 'app-remove-modal',
+  template: '<div style="text-align:center"><div>Deseja realmente excluir sua conta?</div>' +
+    '<button mat-raised-button (click)="cancel()">Cancel</button>' +
+    '<button mat-raised-button (click)="confirm()">Sim</button>'
 })
-export class ErrorModal {
-  error: string = '';
+export class RemoveModalComponent {
+  confirm: Function
 
-  constructor(
-    public dialogRef: MatDialogRef<ErrorModal>,
+  constructor(private service: UserService,
+    public dialogRef: MatDialogRef<RemoveModalComponent>,
     @Inject(MAT_DIALOG_DATA) data: any) {
-    this.error = data.message  }
+    this.confirm = () => {
+      this.removeUser()
+      this.dialogRef.close()
+    }
+  }
+
+  removeUser() {
+    this.service.removeUser(Globals.getUser().id).subscribe(res => {
+      Globals.setUser(null)
+      location.reload()
+    })
+  }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close()
+  }
+
+  cancel(): void {
+    this.dialogRef.close()
   }
 }
 
@@ -27,49 +46,19 @@ export class ErrorModal {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  logged
+  constructor(private router: Router) {
+    const user = Globals.getUser()
+    this.logged = user
+    if (user == null)
+      this.router.navigate([''])
+    else
+      this.router.navigate(['data-access'])
 
-  displayedColumns = ['userId', 'name', 'email', 'admin', 'actions'];
-  dataSource = null;
-
-  constructor(public dialog: MatDialog, private service: UserService) {
-    this.refresh()
-    this.showError('Teste do erro!')
   }
 
-  refresh() {
-    this.service.getAll().subscribe(res => {
-      this.dataSource = new MatTableDataSource(<[any]>res);
-    }, err => console.error(err))
-  }
-
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim();
-    filterValue = filterValue.toLowerCase();
-    this.dataSource.filter = filterValue;
-  }
-
-  openModal(user): void {
-    let dialogRef = this.dialog.open(NewUserModalComponent, {
-      data: { user: { ...user } }
-    });
-
-    dialogRef.afterClosed().subscribe(user => {
-      if (user)
-        this.saveUser(user)
-    });
-  }
-
-  showError(message: string) {
-    this.dialog.open(ErrorModal, {
-      data: { message: message }
-    })
-  }
-
-  saveUser(user) {
-    this.service.saveUser(user).subscribe(res => { this.refresh() })
-  }
-
-  removeUser(user) {
-    this.service.removeUser(user.userId).subscribe(res => { this.refresh() })
+  logout() {
+    Globals.setUser(null)
+    location.reload()
   }
 }

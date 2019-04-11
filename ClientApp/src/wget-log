@@ -1,0 +1,11 @@
+--2018-06-22 01:27:04--  https://www.google.com.br/url?sa=i
+Resolvendo www.google.com.br (www.google.com.br)... 172.217.30.99, 2800:3f0:4001:80b::2003
+Conectando-se a www.google.com.br (www.google.com.br)|172.217.30.99|:443... conectado.
+A requisição HTTP foi enviada, aguardando resposta... 200 OK
+Tamanho: não especificada [text/html]
+Salvando em: “url?sa=i”
+
+url?sa=i                           [<=>                                                ]       0  --.-KB/s               url?sa=i                           [ <=>                                               ]   1,31K  --.-KB/s    em 0s      
+
+2018-06-22 01:27:05 (6,67 MB/s) - “url?sa=i” salvo [1341]
+
