@@ -5,22 +5,22 @@
     "start": "babel-node server.js",
     "dev": "nodemon --watch src --exec babel-node src/server.js"
   },
-  "dependencies": {
+  "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "body-parser": "^1.18.2",
-    "dotenv": "^6.0.0",
-    "express": "^4.16.3",
-    "linux-user": "^0.1.0",
-    "morgan": "^1.9.0",
-    "mysql2": "^1.5.3",
-    "sequelize": "^4.37.7",
-    "sha1": "^1.1.1",
-    "sqlite3": "^4.0.0"
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^1.18.11"
   },
-  "devDependencies": {
-    "nodemon": "^1.17.4"
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "linux-user": "^0.1.0",
+    "morgan": "^1.9.1",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.3.4",
+    "sha1": "^1.1.1",
+    "sqlite3": "^4.0.6"
   }
 }
