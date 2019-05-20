@@ -3,6 +3,7 @@ import bodyParser from 'body-parser'
 import morgan from 'morgan'
 
 import userController from './controllers/user'
+import databaseController from './controllers/database'
 
 const app = express()
 
@@ -19,6 +20,10 @@ app.get('/api/user', userController.getAll)
 app.post('/api/user', userController.create)
 app.post('/api/token', userController.token)
 app.delete('/api/user/:id', userController.delete)
+
+app.post('/api/database', databaseController.create)
+app.get('/api/database', databaseController.getAll)
+app.delete('/api/database/:id', databaseController.remove)
 
 const port = 8081
 

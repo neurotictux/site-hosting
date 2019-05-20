@@ -1,4 +1,4 @@
-import { sequelize, User } from '../db/sequelize'
+import { sequelize, User } from '../db'
 import { exec } from 'child_process'
 import sha1 from 'sha1'
 
