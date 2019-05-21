@@ -1,11 +1,14 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import morgan from 'morgan'
+import Pm2 from 'pm2'
 
 import userController from './controllers/user'
 import databaseController from './controllers/database'
 
 const app = express()
+
+console.log(Pm2.list())
 
 app.use(morgan('dev'))
 
