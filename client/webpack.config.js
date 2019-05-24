@@ -3,10 +3,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 const fileName = `bundle${(new Date()).getTime()}.js`
-console.log(fileName)
 
 module.exports = {
-  entry: './index.js',
+  entry: path.resolve(__dirname, 'src', 'App.jsx'),
   output: {
     path: path.resolve(__dirname, '..', 'public'),
     filename: fileName
@@ -17,11 +16,23 @@ module.exports = {
     port: 9000
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
+    new HtmlWebpackPlugin({ 
+      template: path.join(__dirname, 'src', 'index.html'),
       title: 'Hosting Store',
-      favicon: 'favicon.ico'
+      favicon: path.join(__dirname, 'src', 'favicon.ico')
     }),
     new CleanWebpackPlugin()
-  ]
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['*', '.jsx', '.js']
+  }
 }
