@@ -4,7 +4,7 @@ import sha1 from 'sha1'
 
 const databases = ['alphadb1', 'alphadb2', 'alphadb3', 'alphadb4', 'alphadb5', 'alphadb6']
 
-const parseUser = (user) => {
+const parseUser = user => {
   return {
     id: user.id,
     name: user.name,
@@ -139,7 +139,7 @@ class UserController {
               console.log(command)
               console.log(err)
             } else {
-              exec(`sudo sh /home/alpha/create-site.sh ${user.userAccess} ${user.domain}`, (err) => {
+              exec(`sudo sh /home/alpha/create-site.sh ${user.userAccess} ${user.domain}`, err => {
                 if (err) {
                   console.log(`Erro em create-site.sh para o usuário ${user.userAccess}`)
                   console.log(err)
@@ -199,7 +199,7 @@ class UserController {
           }
         })
 
-        result = await exec(`sudo rm -rf /home/${userDb.userAccess}`, (err) => {
+        result = await exec(`sudo rm -rf /home/${userDb.userAccess}`, err => {
           if (err) {
             console.log(`Não foi possível remover /home/${userDb.userAccess}`)
             console.log(err)
