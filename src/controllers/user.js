@@ -1,6 +1,8 @@
-import { sequelize, User } from '../db'
-import { exec } from 'child_process'
 import sha1 from 'sha1'
+import { exec } from 'child_process'
+
+import { sequelize, User } from '../db'
+import { createUserValidation } from '../validations'
 
 const databases = ['alphadb1', 'alphadb2', 'alphadb3', 'alphadb4', 'alphadb5', 'alphadb6']
 
@@ -22,7 +24,6 @@ class UserController {
   getAll(req, res) {
     User.findAll()
       .then(result => {
-
         res.json(result.map(p => parseUser(p)))
       })
       .catch(err => res.end(JSON.stringify(err)))
@@ -57,7 +58,7 @@ class UserController {
       return
     }
 
-    if (userDb.password != password) {
+    if (userDb.password !== password) {
       res.json({ message: 'Credenciais inválidas.' })
       return
     }
@@ -68,27 +69,9 @@ class UserController {
   async create(req, res) {
     try {
 
-      const { name, email, password, domain } = req.body
+      const { name, email } = req.body || {}
 
-      if (!name || !/^[a-zA-Z0-9_]{0,20}$/.test(name)) {
-        res.json({ message: 'Nome inválido.' })
-        return
-      }
-
-      if (!email || !/[a-zA-Z0-9]{3,}@[a-zA-Z0-9]{3,}\.[a-zA-Z0-9]{2,}/.test(email)) {
-        res.json({ message: 'Email inválido.' })
-        return
-      }
-
-      if (!domain || !/^[a-zA-Z0-9]{3,10}\.[a-zA-Z0-9]{2,5}$/.test(domain)) {
-        res.json({ message: 'Domínio inválido.' })
-        return
-      }
-
-      if (!password || password.length < 4) {
-        res.json({ message: 'Informe uma senha de no mínimo 4 dígitos.' })
-        return
-      }
+      createUserValidation(req.body)
 
       const userDb = await User.findOne({
         where: sequelize.or(
@@ -97,13 +80,10 @@ class UserController {
         )
       })
 
-      if (userDb) {
-        if (userDb.email === email)
-          res.json({ message: 'Email já cadastrado.' })
-        else
-          res.json({ message: 'Nome já cadastrado.' })
-        return
-      }
+      if (userDb && userDb.email === email)
+        throw { message: 'Email já cadastrado.' }
+      else if (userDb)
+        throw { message: 'Nome já cadastrado.' }
 
       const usedDbs = await User.findAll().map(p => p.database)
       if (usedDbs.length >= 6) {
@@ -125,7 +105,7 @@ class UserController {
 
       let result = null
       const created = await User.create(user)
-      result = await exec(`sudo useradd -m -d /home/${user.userAccess} -p $(openssl passwd -1 ${user.password}) ${user.userAccess}`, (err) => {
+      result = await exec(`sudo useradd -m -d /home/${user.userAccess} -p $(openssl passwd -1 ${user.password}) ${user.userAccess}`, err => {
         if (err) {
           console.log(`Erro ao criar usuário ${user.userAccess}`)
           console.log(err)
@@ -178,17 +158,17 @@ class UserController {
             console.log(`Erro no shell script para o usuário ${userDb.userAccess}`)
             console.log(err)
           } else {
-            exec(`sudo pkill -u ${userDb.userAccess}`, (err) => {
+            exec(`sudo pkill -u ${userDb.userAccess}`, err => {
               if (err) {
                 console.log(`Não foi possível encerrar os processos do usuário ${userDb.userAccess}.`)
                 console.log(err)
               }
-              exec(`sudo userdel ${userDb.userAccess}`, (err) => {
+              exec(`sudo userdel ${userDb.userAccess}`, err => {
                 if (err) {
                   console.log(`Não foi possível remover o usuário ${userDb.userAccess} do sistema.`)
                   console.log(err)
                 }
-                exec(`sudo sh /home/alpha/delete-site.sh ${userDb.userAccess}`, (err) => {
+                exec(`sudo sh /home/alpha/delete-site.sh ${userDb.userAccess}`, err => {
                   if (err) {
                     console.log(`Erro em delete-site.sh para o usuário ${userDb.userAccess}`)
                     console.log(err)

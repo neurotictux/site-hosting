@@ -30,14 +30,12 @@ class DatabaseController {
 
       await User.create(user)
 
-      await sequelize.query(`create user ${user.name} with password '${user.password}'`)
+      await sequelize.query(`CREATE USER ${user.name} WITH PASSWORD '${user.password}'`)
 
       await sequelize.query(`CREATE DATABASE ${user.dbName}
           WITH 
           OWNER = '${user.name}'
           ENCODING = 'UTF8'
-          LC_COLLATE = 'en_ZA.UTF-8'
-          LC_CTYPE = 'en_ZA.UTF-8'
           TABLESPACE = pg_default CONNECTION
           LIMIT = -1`)
 

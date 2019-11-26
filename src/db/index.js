@@ -3,7 +3,7 @@ import { dbConfig } from '../config'
 
 export const sequelize = new Sequelize(dbConfig.DATABASE_URI, dbConfig)
 
-export const User = sequelize.define('user', {
+export const User = sequelize.define('User', {
   id: {
     primaryKey: true,
     autoIncrement: true,
@@ -13,6 +13,11 @@ export const User = sequelize.define('user', {
   password: Sequelize.STRING,
   domain: Sequelize.STRING,
   dbName: Sequelize.STRING
+}, {
+  freezeTableName: 'User',
+  undercored: false,
+  updatedAt: false,
+  createdAt: false
 })
 
 sequelize.sync()
