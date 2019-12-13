@@ -24,3 +24,9 @@ sudo a2enmod rewrite
 ```
 
 5. Instalar pm2 para gerenciamento das aplicações
+
+6. Scripts de banco
+```sql
+CREATE USER hosting WITH PASSWORD '123';
+CREATE DATABASE hosting WITH  OWNER = 'hosting' ENCODING = 'UTF8' TABLESPACE = pg_default CONNECTION LIMIT = -1;
+```
